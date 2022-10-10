@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing speed calculator</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gwendolyn&family=Quintessential&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <style>
+    body {
+      background-color: rgb(62, 62, 172);
+    }
+    .container {
+      position: absolute;
+      margin-top: 200px;
+    }
+
+    .main {
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transition: translate(-50% -50%);
+    }
+
+    #textarea {
+      background-color: black;
+      color: aliceblue;
+    }
+    .header {
+      text-align: center;
+      color: aliceblue;
+      font-family: "Quintessential", cursive;
+      font-size: 30px;
+    }
+
+    #btn {
+      width: 100px;
+      height: 30px;
+      margin-left: 300px;
+      border-radius: 5px;
+      border-color: aliceblue;
+    }
+    h1 {
+      color: aliceblue;
+      text-align: center;
+    }
+    h2 {
+      text-align: center;
+      color: aliceblue;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="main">
+        <h1>Welcome to the typing speed calculator</h1>
+        <h2 id="result"></h2>
+        <br />
+        <textarea
+          name="text"
+          id="textarea"
+          cols="100"
+          rows="20"
+          placeholder="Remember! be nice"
+        ></textarea>
+        <br />
+        <button id="btn" type="button">Start</button>
+      </div>
+    </div>
+
+    <script>
+      const writewords = [
+        "hello i m safiya siddiqui ",
+        "and i m a student of btech cse second year ",
+        " and i m a front end developer",
+        " and i can design a  e commerse website",
+      ];
+      const result = document.getElementById("result");
+      const Textarea = document.getElementById("textarea");
+      const button = document.getElementById("btn");
+
+      let startTime, endTime;
+
+      function playgame() {
+        let random = Math.floor(Math.random() * writewords.length);
+        result.innerText = writewords[random];
+        let date = new Date();
+        startTime = date.getTime();
+        btn.innerText = "Done";
+      }
+
+      function compareWords(str1, str2) {
+        let word1 = str1.split("");
+        let word2 = str2.split("");
+        let cnt = 0;
+        word1.forEach(function (item, index) {
+          if (item == word2[index]) {
+            cnt++;
+          }
+        });
+
+        let errorwords = word1.length - cnt;
+
+        return (
+          cnt + "correct out of" + word1.length + " words and the total ",
+          "number of errors are" + errorwords + " ."
+        );
+      }
+      function endplaygame() {
+        let date = new Date();
+        endTime = date.getTime();
+        let Totaltime = (endTime - startTime) / 1000;
+        console.log(Totaltime);
+        const totalstr = Textarea.value;
+        const wordscount = counterwords(totalstr);
+        let speed = Math.floor((wordscount / Totaltime) * 60);
+
+        let finalmessage = "you typed total at" + speed + "words per minute";
+        result.innerText = finalmessage;
+
+        finalmessage += compareWords(result.innerText, totalstr);
+        result.innerText = finalmessage;
+      }
+
+      function counterwords(str) {
+        let response = str.split(" ").length;
+        console.log(response);
+        return response;
+      }
+
+      btn.addEventListener("click", function () {
+        if (this.innerText == "Start") {
+          Textarea.disabled = false;
+          playgame();
+        } else if (this.innerText == "Done") {
+          Textarea.disabled = true;
+          btn.innerText = "Start";
+          endplaygame();
+        }
+      });
+    </script>
+  </body>
+</html>
